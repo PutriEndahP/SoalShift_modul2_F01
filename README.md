@@ -161,7 +161,17 @@ int main() {
 	Sleep diatur 3 detik karena permintaan dari soal.
 
 ## Soal 3
+Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
+Buatlah program C yang dapat :
 
+i)  mengekstrak file zip tersebut.
+
+ii) menyimpan daftar file dari folder “campur2” yang memiliki ekstensi .txt ke dalam file daftar.txt. 
+Catatan:  
+Gunakan fork dan exec.
+Gunakan minimal 3 proses yang diakhiri dengan exec.
+Gunakan pipe
+Pastikan file daftar.txt dapat diakses dari text editor
 
 ## Soal 4
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang0-30detik).
