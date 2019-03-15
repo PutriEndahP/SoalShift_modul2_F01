@@ -163,15 +163,84 @@ int main() {
 ## Soal 3
 Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
 Buatlah program C yang dapat :
-
 i)  mengekstrak file zip tersebut.
-
 ii) menyimpan daftar file dari folder “campur2” yang memiliki ekstensi .txt ke dalam file daftar.txt. 
 Catatan:  
 Gunakan fork dan exec.
 Gunakan minimal 3 proses yang diakhiri dengan exec.
 Gunakan pipe
 Pastikan file daftar.txt dapat diakses dari text editor
+
+ Pada soal nomer 3 ini kami diminta untuk mengekstrak file campur2.zip yang kedua kita harus menyimpan daftar file dari folder "campur2" yang memiliki ekstensi .txt ke dalam file daftar.txt. Pertama kami membuat file soal3.c yang berisi source code berikut ini :
+
+```javascript
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main() {
+  pid_t child_id_satu, child_id_dua, child_id_tiga;
+  int pipe_satu[2], pipe_dua[2];
+
+  pipe(pipe_satu);
+  pipe(pipe_dua);
+
+  child_id_satu = fork();
+  
+  if (child_id_satu < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  if (child_id_satu == 0) {
+    // this is child
+    
+    char *zip[] = {"unzip", "/home/putri/sisop/modul2_soalshift/campur2.zip", NULL};
+    execv(zip[], zip);
+  } else {
+        while(wait(NULL) > 0);
+
+        child_id_dua = fork();
+
+if (child_id_dua < 0) {
+   exit(EXIT_FAILURE);
+  }
+
+if (child_id_dua == 0) 
+{
+        dup2(pipesatu[2], STDOUT_FILENO);
+        close(pipesatu[2]);
+        close(pipedua[2]);
+
+        char *ls[] = {"ls", "/home/putri/sisop/modul2_soalshift/campur2", NULL};
+        execvp(ls[0], ls);
+}
+else {
+        while(wait(NULL) > 0);
+
+        child_id_tiga == fork();
+
+if(child_id_tiga < 0) {
+   exit(EXIT_FAILURE);
+}
+if(child_id_tiga == 0) 
+{
+
+}
+}
+  }
+}
+```
+ Berdasrkan source code diatas yang merupakan source code yang belum selesai berarti kita punya 3 proses disini bersama tiga child_id yaitu child_id_satu, child_id_dua, dan child_id_tiga dan terdiri dari dua pipe yaitu pipe_satu dan pipe dua. Awalnya kita harus mendeklarasikan terlebih dahulu child dan pipe pipe nya.
+
+``` char *zip[] = {"unzip", "/home/putri/sisop/modul2_soalshift/campur2.zip", NULL};
+    execv(zip[], zip);
+```
+Pada proses pertama kita meng unzip file dengan source code diatas.
+Proses kedua dengan menggunakan child_id_dua dan membutuhkan pipe dikarenakan output dari proses pertama dijadikan input untuk proses kedua. maka dari itu kita harus menghubungkan STDOUT dengan PIPE dengan source code dibawah ini :
+
+``` javascript
+  dup2(pipesatu[2], STDOUT_FILENO);
+```
 
 ## Soal 4
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang0-30detik).
