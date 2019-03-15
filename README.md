@@ -6,70 +6,70 @@
 ## Soal 1
 Elen mempunyai pekerjaan pada studio sebagai fotografer. Suatu hari ada seorang klien yang bernama Kusuma yang meminta untuk mengubah nama file yang memiliki ekstensi .png menjadi “[namafile]_grey.png”. Karena jumlah file yang diberikan Kusuma tidak manusiawi, maka Elen meminta bantuan kalian untuk membuat suatu program C yang dapat mengubah nama secara otomatis dan diletakkan pada direktori /home/[user]/modul2/gambar.
 Catatan : Tidak boleh menggunakan crontab.
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <unistd.h>
-#include <syslog.h>
-#include <string.h>
-#include <dirent.h>
+		#include <sys/types.h>
+		#include <sys/stat.h>
+		#include <stdio.h>
+		#include <stdlib.h>
+		#include <fcntl.h>
+		#include <errno.h>
+		#include <unistd.h>
+		#include <syslog.h>
+		#include <string.h>
+		#include <dirent.h>
 
-int main() {
-	pid_t pid, sid;
-	pid = fork();
+		int main() {
+			pid_t pid, sid;
+			pid = fork();
 
-	if (pid < 0){
-		exit(EXIT_FAILURE);
-	}
+			if (pid < 0){
+				exit(EXIT_FAILURE);
+			}
 
-	if (pid > 0){
-		exit(EXIT_SUCCESS);
-	}
+			if (pid > 0){
+				exit(EXIT_SUCCESS);
+			}
 
-	umask(0);
+			umask(0);
 
-	sid = setsid();
+			sid = setsid();
 
-	if (sid < 0) {
-		exit(EXIT_FAILURE);
-	}
+			if (sid < 0) {
+				exit(EXIT_FAILURE);
+			}
 
-	if ((chdir("/home/fdh/Downloads/modul2/soal1")) < 0) {
-		exit(EXIT_FAILURE);
-	}
+			if ((chdir("/home/fdh/Downloads/modul2/soal1")) < 0) {
+				exit(EXIT_FAILURE);
+			}
 
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
+			close(STDIN_FILENO);
+			close(STDOUT_FILENO);
+			close(STDERR_FILENO);
 
-	while(1) {
-  	DIR *folder;
-   	struct dirent *file;
-   	folder = opendir("/home/garda/documents");
-   	if(folder){
-        while((file = readdir(folder)) != NULL){
-        
-		if(strstr(&file->d_name[strlen(file->d_name)-5], ".png")){
-                 char namafile[300]="";
-                 strncpy(namafile, file->d_name,strlen(file->d_name)-4 );
-                 strcat(namafile, "_grey.png");
-                 rename(strcat(".", file->d_name), 
-		strcat("/gambar", namafile));
-              }
-        }
-        closedir(folder);
-              }
-        }
-        closedir(folder); 
+			while(1) {
+			DIR *folder;
+			struct dirent *file;
+			folder = opendir("/home/garda/documents");
+			if(folder){
+			while((file = readdir(folder)) != NULL){
+
+				if(strstr(&file->d_name[strlen(file->d_name)-5], ".png")){
+				 char namafile[300]="";
+				 strncpy(namafile, file->d_name,strlen(file->d_name)-4 );
+				 strcat(namafile, "_grey.png");
+				 rename(strcat(".", file->d_name), 
+				strcat("/gambar", namafile));
+			      }
+			}
+			closedir(folder);
+			      }
+			}
+			closedir(folder); 
+				}
+				sleep(10);
+			}
+			exit(EXIT_SUCCESS);
+
 		}
-		sleep(10);
-	}
-	exit(EXIT_SUCCESS);
-
-}
 
 
 
