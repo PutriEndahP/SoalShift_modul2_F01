@@ -105,6 +105,7 @@ Pada detik ke-10 terdapat file makan_sehat1.txt dan makan_sehat2.txt
 
 Catatan: 
 •	dilarang menggunakan crontab
+
 •	Contoh nama file : makan_sehat1.txt, makan_sehat2.txt, dst
 
 	Langkah awal yang dilakukan adalah membuat directori makanan yang berada pada /home/[user]/Documents/makanan yang berisi makan_enak.txt yang berada pada file soal4.cpp yang berisi source code seperti berikut ini :
