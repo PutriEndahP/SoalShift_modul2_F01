@@ -3,6 +3,9 @@
 1. Putri Endah Puspitasari (05111740000039)
 2. Garda Negara Wisnumurti (05111740000153)
 
+## Soal 1
+
+
 ## Soal 2
 Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
 Catatan: Tidak boleh menggunakan crontab
@@ -88,6 +91,9 @@ int main() {
 	Jadi syarat agar file terhapus kan jika file tersebut owner dan grupnya bernama www-data. Maka jika us = grp sudah menjadi www-data, maka di hapus file tadi yang kita beri nama tempat.
 
 	Sleep diatur 3 detik karena permintaan dari soal.
+
+## Soal 3
+
 
 ## Soal 4
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang0-30detik).
@@ -331,7 +337,7 @@ total_length dimasukkan kedalam character bernama line.
 
 ``` FILE * command = popen("pidof soal5daemon","r");``` berarti kita membuat file command yang perintahnya membuka pid dari soal5daemon.
 
-Kemudian dapatkan command, line dan total_length dalam satu baris. Jika proses sudah di kill maka akan dis
+	Kemudian dapatkan command, line dan total_length dalam satu baris. Jika proses sudah di kill maka akan muncul pesan killed yang berarti proses ID tersebut sudah di kill.
 
 
 
