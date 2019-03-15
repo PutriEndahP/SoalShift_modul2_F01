@@ -1,6 +1,6 @@
 # SoalShift_modul2_F01
 
-1. Putri Endah Puspitasari (05111740000039)
+1. Putri Endah Puspitasari (05111740000039)<br>
 ~~2. Garda Negara Wisnumurti (05111740000153)~~
 
 ## Soal 1
