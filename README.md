@@ -6,6 +6,7 @@
 ## Soal 1
 Elen mempunyai pekerjaan pada studio sebagai fotografer. Suatu hari ada seorang klien yang bernama Kusuma yang meminta untuk mengubah nama file yang memiliki ekstensi .png menjadi “[namafile]_grey.png”. Karena jumlah file yang diberikan Kusuma tidak manusiawi, maka Elen meminta bantuan kalian untuk membuat suatu program C yang dapat mengubah nama secara otomatis dan diletakkan pada direktori /home/[user]/modul2/gambar.
 Catatan : Tidak boleh menggunakan crontab.
+```javascript
 		
 		#include <sys/types.h>
 		#include <sys/stat.h>
@@ -68,6 +69,8 @@ Catatan : Tidak boleh menggunakan crontab.
 			exit(EXIT_SUCCESS);
 
 		}
+```
+
 Jadi di line pertama terdapat DIR untuk membuka directory. Strstr untuk memeriksa ekstensi png. Strcpy untuk menyisipkan grey.png. Rename untuk merename nama sesuai format soal. 
 
 
