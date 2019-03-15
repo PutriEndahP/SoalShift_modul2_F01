@@ -104,6 +104,7 @@ File makan_enak.txt terakhir dibuka pada detik ke-1
 Pada detik ke-10 terdapat file makan_sehat1.txt dan makan_sehat2.txt
 
 Catatan: 
+
 •	dilarang menggunakan crontab
 
 •	Contoh nama file : makan_sehat1.txt, makan_sehat2.txt, dst
