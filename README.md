@@ -804,7 +804,7 @@ int main() {
 
 	Sleep diatur 3 detik karena permintaan dari soal.
 
-![2](/img/2.png)
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal2/2.png)
 
 *Contoh menjalankan dan output dari soal2*
 
