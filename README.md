@@ -714,7 +714,14 @@ Catatan : Tidak boleh menggunakan crontab.
 
 	}
 
-Jadi di line pertama DIR adalah fungsi untuk dapat mengakses direktory lalu struct dirent digunakan untuk mengakses file dalam direktory tersebut. Line berikutnya adalah alamat file yang akan diakses. if dibawahnya adalah mengecek direktory bila kosong tidak masuk ke dalam perintah if. Berikutnya while ini digunakan untuk membaca tiap file di dalam direktory. Berikutnya strstr digunakan untuk membandingkan nama file dengan .png yang dimana strlen digunakan untuk mengambil 5 digit dibelakang nama untuk dibandingkan. Lalu membuat string kosong bernama namafile. cur adalah alamat folder lama yang akan di ubah namanya lalu trg adalah alamat folder yang sudah di ubah. Strncpy digunakan untuk menghapus 4 digit terakhir yaitu .png lalu strcat untuk menambahkan _gre.png. Yang terakhir  rename digunakan untuk mengubah file dan memindah file ke folder target.
+Jadi di line pertama DIR adalah fungsi untuk dapat mengakses direktory lalu struct dirent digunakan untuk mengakses file dalam direktory tersebut. Line berikutnya adalah alamat file yang akan diakses. if dibawahnya adalah mengecek direktory bila kosong tidak masuk ke dalam perintah if. Berikutnya while ini digunakan untuk membaca tiap file di dalam direktory. Berikutnya strstr digunakan untuk membandingkan nama file dengan .png yang dimana strlen digunakan untuk mengambil 5 digit dibelakang nama untuk dibandingkan. Lalu membuat string kosong bernama namafile. cur adalah alamat folder lama yang akan di ubah namanya lalu trg adalah alamat folder yang sudah di ubah. Strncpy digunakan untuk menghapus 4 digit terakhir yaitu .png lalu strcat untuk menambahkan _gre.png. Yang terakhir  rename digunakan untuk mengubah file dan memindah file ke folder tar!get.
+
+![soal1a](https://user-images.githubusercontent.com/45958288/54841000-dd522e00-4d00-11e9-9d7c-55a1212e4816.png)
+
+screenshot di atas menguji file gardaa.png dan garda.png.txt
+![soal1b](https://user-images.githubusercontent.com/45958288/54841208-5c476680-4d01-11e9-9336-6b24657078f0.png)
+
+outputnya gardaa_grey.png berada di folder gambar
 
 
 
@@ -803,11 +810,6 @@ int main() {
 	Jadi syarat agar file terhapus kan jika file tersebut owner dan grupnya bernama www-data. Maka jika us = grp sudah menjadi www-data, maka di hapus file tadi yang kita beri nama tempat.
 
 	Sleep diatur 3 detik karena permintaan dari soal.
-
-![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal2/2.png)
-
-*Contoh menjalankan dan output dari soal2*
-
 
 ### Soal 3
 Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
@@ -950,13 +952,6 @@ char jawaban[255];
         fputs(jawaban, filenya);
         fclose(filenya);
 ```
-![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal3/3.png)
-
-*Contoh menjalankan dan output dari soal3*
-
-![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal3/3.1.png)
-
-*Contoh menjalankan dan output dari soal3*
 
 ### Soal 4
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang0-30detik).
@@ -1052,10 +1047,6 @@ strcpy(file,"/home/putri/Documents/makanan/makan_enak.txt");
 	digunakan untuk menyimpan urutan_file yang berupa integer meliputi 1,2,3 dst, kemudian nfile yang berisi file makan_sehat tadi ditambah dengan integer yang hasilnya di simpan lagi di variabel nfile. Kemudian digabungkan lagi dengan .txt pada nfile tersebut agar format yangdiminta yaitu makan_sehat1.txt bisa terwujud.
 
 	Kemudian kita membuat file nfile itu tadi yang berupa makan_sehat1.txt dan seterusnya dengan fungsi fopenan. Urutan_file akan increment terus menerus mulai dari 1. Untuk sleep sendiri menggunakan sleep 5 karena di soal diperintahkan setiap 5 detik sekali di cek nya.
-
-![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal4/4.png)
-
-*Contoh menjalankan dan output dari soal4*
 
 ### Soal 5
 Kerjakan poin a dan b di bawah:
@@ -1198,9 +1189,6 @@ total_length dimasukkan kedalam character bernama line.
 
 	Kemudian dapatkan command, line dan total_length dalam satu baris. Jika proses sudah di kill maka akan muncul pesan killed yang berarti proses ID tersebut sudah di kill.
 
-![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal5/5.png)
-
-*Contoh menjalankan dan output dari soal5*
 
 
 
