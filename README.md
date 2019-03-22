@@ -804,7 +804,7 @@ int main() {
 
 	Sleep diatur 3 detik karena permintaan dari soal.
 
-![1](/img/2.png)
+![2](/img/2.png)
 
 *Contoh menjalankan dan output dari soal2*
 
@@ -950,11 +950,11 @@ char jawaban[255];
         fputs(jawaban, filenya);
         fclose(filenya);
 ```
-![1](/img/3.png)
+![3](/img/3.png)
 
 *Contoh menjalankan dan output dari soal3*
 
-![1](/img/3.1.png)
+![3.1](/img/3.1.png)
 
 *Contoh menjalankan dan output dari soal3*
 
@@ -1053,7 +1053,7 @@ strcpy(file,"/home/putri/Documents/makanan/makan_enak.txt");
 
 	Kemudian kita membuat file nfile itu tadi yang berupa makan_sehat1.txt dan seterusnya dengan fungsi fopenan. Urutan_file akan increment terus menerus mulai dari 1. Untuk sleep sendiri menggunakan sleep 5 karena di soal diperintahkan setiap 5 detik sekali di cek nya.
 
-![1](/img/4.png)
+![4](/img/4.png)
 
 *Contoh menjalankan dan output dari soal4*
 
@@ -1198,7 +1198,7 @@ total_length dimasukkan kedalam character bernama line.
 
 	Kemudian dapatkan command, line dan total_length dalam satu baris. Jika proses sudah di kill maka akan muncul pesan killed yang berarti proses ID tersebut sudah di kill.
 
-![1](/img/5.png)
+![5](/img/5.png)
 
 *Contoh menjalankan dan output dari soal5*
 
