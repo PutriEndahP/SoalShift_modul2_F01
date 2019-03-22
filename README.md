@@ -650,72 +650,73 @@ Untuk menyelesaikan latihan 3 ini menggunakan daemon. Awal yang perlu dilakukan 
 ### Soal 1
 Elen mempunyai pekerjaan pada studio sebagai fotografer. Suatu hari ada seorang klien yang bernama Kusuma yang meminta untuk mengubah nama file yang memiliki ekstensi .png menjadi “[namafile]_grey.png”. Karena jumlah file yang diberikan Kusuma tidak manusiawi, maka Elen meminta bantuan kalian untuk membuat suatu program C yang dapat mengubah nama secara otomatis dan diletakkan pada direktori /home/[user]/modul2/gambar.
 Catatan : Tidak boleh menggunakan crontab.
-```javascript
-		
-		#include <sys/types.h>
-		#include <sys/stat.h>
-		#include <stdio.h>
-		#include <stdlib.h>
-		#include <fcntl.h>
-		#include <errno.h>
-		#include <unistd.h>
-		#include <syslog.h>
-		#include <string.h>
-		#include <dirent.h>
 
-		int main() {
-			pid_t pid, sid;
-			pid = fork();
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <fcntl.h>
+	#include <errno.h>
+	#include <unistd.h>
+	#include <syslog.h>
+	#include <string.h>
+	#include <dirent.h>
 
-			if (pid < 0){
-				exit(EXIT_FAILURE);
-			}
+	int main() {
+		pid_t pid, sid;
+		pid = fork();
 
-			if (pid > 0){
-				exit(EXIT_SUCCESS);
-			}
-
-			umask(0);
-
-			sid = setsid();
-
-			if (sid < 0) {
-				exit(EXIT_FAILURE);
-			}
-
-			if ((chdir("/home/fdh/Downloads/modul2/soal1")) < 0) {
-				exit(EXIT_FAILURE);
-			}
-
-			close(STDIN_FILENO);
-			close(STDOUT_FILENO);
-			close(STDERR_FILENO);
-
-			while(1) {
-			DIR *direktory;
-			struct dirent *file;
-			direktory = opendir("/home/garda/documents");
-			if(direktory){
-			while((file = readdir(direktory)) != NULL){
-
-				if(strstr(&file->d_name[strlen(file->d_name)-5], ".png")){
-				 char namafile[300]="";
-				 strncpy(namafile, file->d_name,strlen(file->d_name)-4 );
-				 strcat(namafile, "_grey.png");
-				 rename(strcat(".", file->d_name), 
-				strcat("/gambar", namafile));
-			      }
-			}
-			closedir(direktory);
-			      }
-				sleep(10);
-			}
-			exit(EXIT_SUCCESS);
-
+		if (pid < 0){
+			exit(EXIT_FAILURE);
 		}
-```
 
-Jadi di line pertama terdapat DIR untuk membuka directory. Strstr untuk memeriksa ekstensi png. Strcpy untuk menyisipkan grey.png. Rename untuk merename nama sesuai format soal. 
+		if (pid > 0){
+			exit(EXIT_SUCCESS);
+		}
+
+		umask(0);
+
+		sid = setsid();
+
+		if (sid < 0) {
+			exit(EXIT_FAILURE);
+		}
+
+		if ((chdir("/")) < 0) {
+			exit(EXIT_FAILURE);
+		}
+
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
+
+		while(1) {
+		DIR *direktory;
+		struct dirent *file;
+		direktory = opendir("/home/gardanwm/Documents/gambarpng");
+		if(direktory!=NULL){
+		while(file = readdir(direktory)){
+
+			if(strstr(&file->d_name[strlen(file->d_name)-5], ".png")){
+			 char namafile[300]="",
+				cur[300]="/home/gardanwm/Documents/gambarpng/",
+				trg[300]="/home/gardanwm/Documents/gambar/";
+			 strncpy(namafile, file->d_name, strlen(file->d_name)-4 );
+			 strcat(namafile, "_grey.png");
+			 rename(strcat(cur, file->d_name), strcat(trg, namafile));
+		      }
+		}
+		closedir(direktory);
+		      }
+			sleep(10);
+		}
+		exit(EXIT_SUCCESS);
+
+	}
+
+Jadi di line pertama DIR adalah fungsi untuk dapat mengakses direktory lalu struct dirent digunakan untuk mengakses file dalam direktory tersebut. Line berikutnya adalah alamat file yang akan diakses. if dibawahnya adalah mengecek direktory bila kosong tidak masuk ke dalam perintah if. Berikutnya while ini digunakan untuk membaca tiap file di dalam direktory. Berikutnya strstr digunakan untuk membandingkan nama file dengan .png yang dimana strlen digunakan untuk mengambil 5 digit dibelakang nama untuk dibandingkan. Lalu membuat string kosong bernama namafile. cur adalah alamat folder lama yang akan di ubah namanya lalu trg adalah alamat folder yang sudah di ubah. Strncpy digunakan untuk menghapus 4 digit terakhir yaitu .png lalu strcat untuk menambahkan _gre.png. Yang terakhir  rename digunakan untuk mengubah file dan memindah file ke folder target.
+
+
 
 ### Soal 2
 Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
