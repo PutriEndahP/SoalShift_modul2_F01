@@ -950,11 +950,11 @@ char jawaban[255];
         fputs(jawaban, filenya);
         fclose(filenya);
 ```
-![3](/img/3.png)
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal3/3.png)
 
 *Contoh menjalankan dan output dari soal3*
 
-![3.1](/img/3.1.png)
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal3/3.1.png)
 
 *Contoh menjalankan dan output dari soal3*
 
@@ -1053,7 +1053,7 @@ strcpy(file,"/home/putri/Documents/makanan/makan_enak.txt");
 
 	Kemudian kita membuat file nfile itu tadi yang berupa makan_sehat1.txt dan seterusnya dengan fungsi fopenan. Urutan_file akan increment terus menerus mulai dari 1. Untuk sleep sendiri menggunakan sleep 5 karena di soal diperintahkan setiap 5 detik sekali di cek nya.
 
-![4](/img/4.png)
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal4/4.png)
 
 *Contoh menjalankan dan output dari soal4*
 
@@ -1198,9 +1198,10 @@ total_length dimasukkan kedalam character bernama line.
 
 	Kemudian dapatkan command, line dan total_length dalam satu baris. Jika proses sudah di kill maka akan muncul pesan killed yang berarti proses ID tersebut sudah di kill.
 
-![5](/img/5.png)
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal5/5.png)
 
 *Contoh menjalankan dan output dari soal5*
+
 
 
 
