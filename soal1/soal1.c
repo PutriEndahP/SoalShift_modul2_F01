@@ -1,4 +1,5 @@
-#include <sys/stat.h>
+#include <sys/types.h>
+	#include <sys/stat.h>
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <fcntl.h>
@@ -28,7 +29,7 @@
 			exit(EXIT_FAILURE);
 		}
 
-		if ((chdir("/home/fdh/Downloads/modul2/soal1")) < 0) {
+		if ((chdir("/")) < 0) {
 			exit(EXIT_FAILURE);
 		}
 
@@ -39,16 +40,17 @@
 		while(1) {
 		DIR *direktory;
 		struct dirent *file;
-		direktory = opendir("/home/garda/documents");
-		if(direktory){
-		while((file = readdir(direktory)) != NULL){
+		direktory = opendir("/home/gardanwm/Documents/gambarpng");
+		if(direktory!=NULL){
+		while(file = readdir(direktory)){
 
 			if(strstr(&file->d_name[strlen(file->d_name)-5], ".png")){
-			 char namafile[300]="";
-			 strncpy(namafile, file->d_name,strlen(file->d_name)-4 );
+			 char namafile[300]="",
+				cur[300]="/home/gardanwm/Documents/gambarpng/",
+				trg[300]="/home/gardanwm/Documents/gambar/";
+			 strncpy(namafile, file->d_name, strlen(file->d_name)-4 );
 			 strcat(namafile, "_grey.png");
-			 rename(strcat(".", file->d_name), 
-			strcat("/gambar", namafile));
+			 rename(strcat(cur, file->d_name), strcat(trg, namafile));
 		      }
 		}
 		closedir(direktory);
@@ -57,4 +59,5 @@
 		}
 		exit(EXIT_SUCCESS);
 
-}
+	}
+
