@@ -538,11 +538,112 @@ Hal tersebut karena agar huruf outputnya urut maka, diberikan fungsi wait karena
 Buatlah program yang bisa membuat folder "anak" yang berisi salinan file [warisan.txt](https://github.com/yoshimaputri/sisop-modul-2/blob/master/warisan.txt).   
 Hint: gunakan `fork`, `exec`, dan `wait`.
 #### Jawaban
+```javascript
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main() {
+  pid_t child_id;
+  int status;
+
+  child_id = fork();
+
+  if (child_id == 0) {
+    // this is child
+
+    char *argv[4] = {"mkdir", "-p", "anak", NULL};
+    execv("/bin/mkdir", argv);
+  } else {
+    // this is parent
+
+    // the parent waits for all the child processes
+    while ((wait(&status)) > 0);
+
+   // char *argv[4] = {"cp", "/home/putri/sisop/modul2/warisan.txt","anak/warisan.txt", NULL};
+    char *argv[4] = {"cp", "warisan.txt","anak/warisan.txt", NULL};
+    execv("/bin/cp", argv);
+  }
+}
+```
+Untuk menyelesaikan soal latihan ini, kami menggunakan fork dan exec yaitu yang pertama dilakukan adalah membuat folder anak kemudian jika folder anak sudah jadi langkah beikutnya yaitu meng copy file warisan.txt yang sudah dibuat sebelumnya ke dalam folder bernama anak yang tadi dibuat di awal progam. setelah di run, maka hasilnya di folder anak akan ada file warisan.txt
 
 ### Latihan 3
 Buatlah sebuah daemon yang dapat melakukan backup isi dari file **sampah.txt** yang disimpan dalam file **log.log** lalu menghapus file **sampah.txt** tersebut.
 Tidak diperbolehkan menggunakan `exec` dan `system`.
 #### Jawaban
+```javascript
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+
+int cfileexists(const char * filename){
+   /* try to open file to read */
+   FILE *file;
+   if (file = fopen(filename, "r")){
+       fclose(file);
+       return 1;
+   }
+   return 0;
+}
+
+int main() {
+ pid_t pid, sid;
+
+ pid = fork();
+
+ if (pid < 0) {
+   exit(EXIT_FAILURE);
+ }
+
+ if (pid > 0) {
+   exit(EXIT_SUCCESS);
+ }
+
+ umask(0);
+
+ sid = setsid();
+
+ if (sid < 0) {
+   exit(EXIT_FAILURE);
+ }
+
+ if ((chdir("/home/putri/sisop/modul2/coba_latihan3/")) < 0) {
+   exit(EXIT_FAILURE);
+ }
+
+ close(STDIN_FILENO);
+ close(STDOUT_FILENO);
+ close(STDERR_FILENO);
+
+ while(1) {
+   // main program here
+   FILE *file1, *file2;
+   char isi[1000];
+   int a;
+   memset(isi, 0, 1000);
+   a = cfileexists("sampah.txt");
+   if(a==1){
+     file1=fopen("sampah.txt","r");
+     fgets(isi,1000,file1);
+     fclose(file1);
+     file2=fopen("log.log","a+");
+     fprintf(file2,"%s",isi);
+     remove("sampah.txt");
+     fclose(file2);
+   }
+   sleep(5);
+ }
+  exit(EXIT_SUCCESS);
+}
+```
+Untuk menyelesaikan latihan 3 ini menggunakan daemon. Awal yang perlu dilakukan adalah membuat file bernama sampah.txt. Buka file sampah.txt yang telah ada, kemudian dibaca isi filenya lalu isi yang ada di sampah.txt di copy di file log.log yang akan terbuat, sedangkan untuk file sampah.txt sendiri akan terhapus setelah isinya dipindahkan di file log.log. 
 
 ## SoalShift_modul2_F01
 
@@ -615,7 +716,6 @@ Catatan : Tidak boleh menggunakan crontab.
 ```
 
 Jadi di line pertama terdapat DIR untuk membuka directory. Strstr untuk memeriksa ekstensi png. Strcpy untuk menyisipkan grey.png. Rename untuk merename nama sesuai format soal. 
-
 
 ### Soal 2
 Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
