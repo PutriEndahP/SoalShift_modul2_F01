@@ -488,6 +488,21 @@ https://notes.shichao.io/apue/
 
 http://www.linuxzasve.com/preuzimanje/TLCL-09.12.pdf
 
+## Jawaban Soal Latihan Modul 2
+### Latihan 1
+Modifikasi code [soal1](https://github.com/yoshimaputri/sisop-modul-2/blob/master/soal1.c) agar output nya menjadi huruf abjad urut dari A sampai Z, tanpa menghapus fungsi yang sudah ada.
+#### Jawaban
+
+### Latihan 2
+Buatlah program yang bisa membuat folder "anak" yang berisi salinan file [warisan.txt](https://github.com/yoshimaputri/sisop-modul-2/blob/master/warisan.txt).   
+Hint: gunakan `fork`, `exec`, dan `wait`.
+#### Jawaban
+
+### Latihan 3
+Buatlah sebuah daemon yang dapat melakukan backup isi dari file **sampah.txt** yang disimpan dalam file **log.log** lalu menghapus file **sampah.txt** tersebut.
+Tidak diperbolehkan menggunakan `exec` dan `system`.
+#### Jawaban
+
 ## SoalShift_modul2_F01
 
 ### Soal 1
