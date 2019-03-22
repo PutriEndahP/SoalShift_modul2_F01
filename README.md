@@ -899,16 +899,50 @@ else {
         return 0;
 }
 ```
- Berdasrkan source code diatas yang merupakan source code yang belum selesai berarti kita punya 3 proses disini bersama tiga child_id yaitu child_id_satu, child_id_dua, dan child_id_tiga dan terdiri dari dua pipe yaitu pipe_satu dan pipe dua. Awalnya kita harus mendeklarasikan terlebih dahulu child dan pipe pipe nya.
+ Berdasrkan source code diatas kita punya 3 proses disini yang akan dieksekusi bersama pipe yaitu proses 1 proses ls (membuka file), proses 2 yaitu proses grep (untuk mencar file yang ber ekstensi .txt), kemudian proses 3 yaitu proses open untuk membuat file bersama tiga child_id yaitu child_id_satu, child_id_dua, dan child_id_tiga dan terdiri dari dua pipe yaitu pipe_satu dan pipe dua. Awalnya kita harus mendeklarasikan terlebih dahulu child dan pipe pipe nya.
 
 ``` char *zip[] = {"unzip", "/home/putri/sisop/modul2_soalshift/campur2.zip", NULL};
     execv(zip[], zip);
 ```
-Pada proses pertama kita meng unzip file dengan source code diatas.
-Proses kedua dengan menggunakan child_id_dua dan membutuhkan pipe dikarenakan output dari proses pertama dijadikan input untuk proses kedua. maka dari itu kita harus menghubungkan STDOUT dengan PIPE dengan source code dibawah ini :
+Pada proses pertama kita meng unzip file dengan source code diatas seperti biasa.
+
+```while(wait(NULL) > 0);``` menggunakan wait karena agar proses bisa berjalan dengan urut, artinya proses kedua tidak akan berjalan jika proses pertama belum selesai.
+
+Proses kedua yaitu ls dengan menggunakan child_id_dua dan membutuhkan pipe dikarenakan output dari proses pertama dijadikan input untuk proses kedua. maka dari itu kita harus menghubungkan STDOUT dengan pipe_satu yang [1] karena agar hasil dari ls berikut disimpan terlebih dahulu di file deskriptor, kenapa pipe yang [1], karena pipe [1] yaitu write untuk STDOUT dengan source code dibawah ini :
 
 ``` javascript
-  dup2(pipesatu[2], STDOUT_FILENO);
+   dup2(pipe_satu[1], STDOUT_FILENO); //agar output dari ls tdk keluar di luar, maka di masukkan ke pipe yang write (1) kalo read (0) 
+        close(pipe_satu[1]);
+        close(pipe_satu[0]);
+
+        char *argv[4] = {"ls", "/home/putri/sisop/modul2_soalshift/campur2", NULL};
+        execvp("/bin/ls", argv);
+```
+Proses ketiga yaitu grep, setelah hasil ls disimpan di pipe_satu[0] dengan menghubungkan STDIN nya selanjutnya kan output dari grep akan dijadikan input untuk membuat file maka dari itu harus dihubungkan juga STDOUT dengan pipe_dua[1]. Sehingga code nya yaitu seperti berikut :
+
+```javascript
+dup2(pipe_satu[0], STDIN_FILENO); //inputnya grep kan didapat dari proses sebelumnya, nah disimpan di pipesatu yang read(0)
+        dup2(pipe_dua[1], STDOUT_FILENO); //outputnya grep disiman di pipekedua yang write(1)
+        close(pipe_dua[0]);
+        close(pipe_dua[1]);
+        close(pipe_satu[0]);
+        close(pipe_satu[1]);
+
+        char *argv[4] = {"grep", ".txt$", NULL};
+        execvp("/bin/grep", argv);
+```
+Kemudian proses terakhir proses tiga yaitu proses membuat file. Proses ini membutuhkan input dari proses sebelumnya, makanya dari pipe_dua[0] di read agar tau jawabannya mana saja yang .txt kemudian di simpan di variable jawaban. Yang terakhir buat file nya bernama daftar.txt yang isi nya dari mengambil isi dari variable jawaban tersebut.
+
+```javascript
+char jawaban[255];
+        close(pipe_dua[1]);
+        close(pipe_satu[0]);
+        close(pipe_satu[1]);
+        read(pipe_dua[0], jawaban, sizeof(jawaban));
+
+        FILE *filenya = fopen("/home/putri/sisop/modul2_soalshift/daftar.txt", "w");
+        fputs(jawaban, filenya);
+        fclose(filenya);
 ```
 
 ### Soal 4
@@ -938,11 +972,6 @@ Catatan:
 #include <syslog.h>
 #include <string.h>
 #include <time.h>
-#include <cstring>
-#include <iostream>
-
-using namespace std;
-
 int main() {
   pid_t pid, sid;
 
@@ -972,36 +1001,28 @@ int main() {
   close(STDOUT_FILENO);
   close(STDERR_FILENO);
 
-    // main program here
-
-        int urutan_file = 1;
-        while(1)
+  int urutan_file=1;
+  FILE *fp;
+char file[256];
+strcpy(file,"/home/putri/Documents/makanan/makan_enak.txt");
+  while(1) {
+        struct stat makan_enak;
+        stat(file,&makan_enak);
+        if(difftime(time(NULL),makan_enak.st_atime) <= 30)
         {
-                struct stat makan_enak;
-                stat("/home/putri/Documents/makanan/makan_enak.txt",&makan_enak);
-//              cout << "diff " << difftime(time(NULL),makan_enak.st_atime) << endl; 
-
-                //membandingkan waktu program berjalan dgn last time program
-                //st.atime untuk waktu program terakhir dibuka(last time)
-                if (difftime(time(NULL),makan_enak.st_atime) <= 30)//time null untuk waktu program saat itu berjalan
-                {
-//                      cout << "-----------" << urutan_file << endl;
-                        string makan_sehat = "/home/putri/Documents/makanan/makan_sehat";
-                        makan_sehat = makan_sehat + to_string(urutan_file) + ".txt";
-
-                        //c_str digunakan meng konversi string ke array of char
-                        //awalnya kan dibaca berupa pointer terus dibaca isi pointernya
-                        //char sehat[100]={*(makan_sehat.c_str())};
-
-                        //membuat file makansehat agar bisa dilihat
-                        FILE *makansehat = fopen((char*)makan_sehat.c_str(),"w");
-                        //FILE *makansehat = fopen(sehat,"w");
-                        fclose(makansehat);
-                        urutan_file++;
-                }
-        sleep(5);
+                char nfile[256];
+                strcpy(nfile,"/home/putri/Documents/makanan/makan_sehat");
+                char c[256];
+                sprintf(c, "%d", urutan_file);
+                strcat(nfile, c);
+                strcat(nfile, ".txt");
+                fp = fopen(nfile, "w");
+                fclose(fp);
+                urutan_file++;
         }
- 
+    sleep(5);
+  }
+  
   exit(EXIT_SUCCESS);
 }
 ```
@@ -1010,11 +1031,14 @@ int main() {
 
 	Untuk membandingkan atau mencari tahu perbedaan waktunya, apakah kurang dari lebih dari atau sama dengan 30 detik menggunakan fungsi difftime, yaitu dengan cara mengurangkan waktu program itu berjalan dengan waktu program terakhir dibuka. Jika hasil difftime tersebut <= 30, maka akan dibuatkan file bernama makan_sehar#.txt dimana # sendiri termasuk integer dari 1-tak hingga.
 
-	Path makan_sehat di letakkan di variabel bernama makan_sehat, kemudian kita butuh untuk mengubah integer yang tadinya 1,2,3 dsb menjadi string yang terdiri dari makan_sehat1.txt, maka kita menggunakan concat yaitu untuk menggabungkan nya menjadi  string. 
+	Path makan_sehat di copy kan di variabel bernama nfile, kemudian kita butuh untuk mengubah integer yang tadinya 1,2,3 dsb menjadi string yang terdiri dari makan_sehat1.txt, maka kita menggunakan concat yaitu untuk menggabungkan nya menjadi  string. 
 
-	makan_sehat = makan_sehat + to_string(urutan_file) + ".txt" berarti, dari string makan_sehat sendiri adalah string makan_sehat + perubahan integer menjadi string + “.txt” maka nantinya file tersebut akan menjadi contoh makan_sehat1.txt begitu seterusnya.
+	code ``` sprintf(c, "%d", urutan_file);
+                strcat(nfile, c);
+                strcat(nfile, ".txt"); ```
+	digunakan untuk menyimpan urutan_file yang berupa integer meliputi 1,2,3 dst, kemudian nfile yang berisi file makan_sehat tadi ditambah dengan integer yang hasilnya di simpan lagi di variabel nfile. Kemudian digabungkan lagi dengan .txt pada nfile tersebut agar format yangdiminta yaitu makan_sehat1.txt bisa terwujud.
 
-	Kemudian kita membuat file untuk makan_sehat tersebut agar dapat dilihat yaitu file pointer makansehat yang akan membuka file makan_sehat yang sudah di konversi menjadi array of chat dengan perintah c_str kemudian di write file tersebut, jika sudah selesai prosesnya maka akan menutup file. Dan urutan_file akan increment terus menerus mulai dari 1. Untuk sleep sendiri menggunakan sleep 5 karena di soal diperintahkan setiap 5 detik sekali di cek nya.
+	Kemudian kita membuat file nfile itu tadi yang berupa makan_sehat1.txt dan seterusnya dengan fungsi fopenan. Urutan_file akan increment terus menerus mulai dari 1. Untuk sleep sendiri menggunakan sleep 5 karena di soal diperintahkan setiap 5 detik sekali di cek nya.
 
 ### Soal 5
 Kerjakan poin a dan b di bawah:
