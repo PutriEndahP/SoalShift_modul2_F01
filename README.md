@@ -811,6 +811,10 @@ int main() {
 
 	Sleep diatur 3 detik karena permintaan dari soal.
 
+Contoh output dari program 
+
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal2/2.png)
+
 ### Soal 3
 Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
 Buatlah program C yang dapat :
@@ -952,6 +956,12 @@ char jawaban[255];
         fputs(jawaban, filenya);
         fclose(filenya);
 ```
+Contoh output dari program 
+
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal3/3.png)
+
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal3/3.1.png)
+
 
 ### Soal 4
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang0-30detik).
@@ -1047,6 +1057,10 @@ strcpy(file,"/home/putri/Documents/makanan/makan_enak.txt");
 	digunakan untuk menyimpan urutan_file yang berupa integer meliputi 1,2,3 dst, kemudian nfile yang berisi file makan_sehat tadi ditambah dengan integer yang hasilnya di simpan lagi di variabel nfile. Kemudian digabungkan lagi dengan .txt pada nfile tersebut agar format yangdiminta yaitu makan_sehat1.txt bisa terwujud.
 
 	Kemudian kita membuat file nfile itu tadi yang berupa makan_sehat1.txt dan seterusnya dengan fungsi fopenan. Urutan_file akan increment terus menerus mulai dari 1. Untuk sleep sendiri menggunakan sleep 5 karena di soal diperintahkan setiap 5 detik sekali di cek nya.
+
+Contoh output dari program 
+
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal4/4.png)
 
 ### Soal 5
 Kerjakan poin a dan b di bawah:
@@ -1189,6 +1203,9 @@ total_length dimasukkan kedalam character bernama line.
 
 	Kemudian dapatkan command, line dan total_length dalam satu baris. Jika proses sudah di kill maka akan muncul pesan killed yang berarti proses ID tersebut sudah di kill.
 
+Contoh output dari program 
+
+![alt text](https://github.com/PutriEndahP/SoalShift_modul2_F01/blob/master/soal5/5.png)
 
 
 
